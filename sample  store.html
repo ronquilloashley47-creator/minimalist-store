@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA — Minimal Essential Goods</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f9f9f9',
+                            100: '#f2f2f2',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                            950: '#0a0a0a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d4;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a3a3a3;
+        }
+        .img-hover-zoom {
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .product-card:hover .img-hover-zoom {
+            transform: scale(1.05);
+        }
+        .toast-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .toast-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="bg-brand-50 text-brand-900 font-sans antialiased selection:bg-brand-900 selection:text-brand-50 min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-30 bg-brand-50/80 backdrop-blur-md border-b border-brand-200/50 transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-brand-800 hover:text-brand-950 focus:outline-none" aria-label="Toggle menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="#" class="text-2xl font-light tracking-[0.25em] text-brand-950 uppercase font-bold">
+                A U R A
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-10 text-xs tracking-widest uppercase font-medium">
+                <a href="#hero" class="text-brand-950 hover:text-brand-500 transition-colors">Home</a>
+                <a href="#shop" class="text-brand-600 hover:text-brand-950 transition-colors">Shop</a>
+                <a href="#about" class="text-brand-600 hover:text-brand-950 transition-colors">About</a>
+                <a href="#contact" class="text-brand-600 hover:text-brand-950 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Actions (Search & Cart) -->
+            <div class="flex items-center space-x-5">
+                <button id="search-btn" class="p-2 text-brand-700 hover:text-brand-950 transition-colors" aria-label="Search">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button id="open-cart-btn" class="relative p-2 text-brand-700 hover:text-brand-950 transition-colors" aria-label="Cart">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span id="cart-badge" class="absolute top-1 right-1 w-4 h-4 bg-brand-950 text-brand-50 text-[10px] font-medium rounded-full flex items-center justify-center opacity-0 transition-opacity duration-300">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-brand-200 bg-brand-50 px-6 py-6 space-y-4 text-xs tracking-widest uppercase">
+            <a href="#hero" class="block text-brand-950 py-1">Home</a>
+            <a href="#shop" class="block text-brand-600 py-1">Shop</a>
+            <a href="#about" class="block text-brand-600 py-1">About</a>
+            <a href="#contact" class="block text-brand-600 py-1">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-[85vh] flex items-center bg-brand-100 overflow-hidden py-16 lg:py-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6 space-y-6 z-10">
+                <span class="inline-block text-xs font-semibold tracking-widest uppercase text-brand-500">Collection 01 / 2026</span>
+                <h1 class="text-4xl sm:text-6xl font-light tracking-tight text-brand-950 leading-[1.15]">
+                    Designed for <br/>
+                    <span class="font-normal italic">thoughtful</span> living.
+                </h1>
+                <p class="text-sm text-brand-600 max-w-md font-light leading-relaxed">
+                    A curated selection of modern, minimalist essentials crafted with premium materials and sustainable practices.
+                </p>
+                <div class="pt-4">
+                    <a href="#shop" class="inline-flex items-center px-8 py-4 bg-brand-950 text-brand-50 text-xs font-medium tracking-widest uppercase hover:bg-brand-800 transition-all duration-300 group">
+                        Explore Shop
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="lg:col-span-6 relative">
+                <div class="aspect-[4/5] bg-brand-200 rounded-none overflow-hidden relative shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Featured Essential Object" 
+                         class="w-full h-full object-cover object-center"
+                         onerror="this.src='https://placehold.co/800x1000/e5e5e5/171717?text=Minimal+Hero'">
+                    <div class="absolute inset-0 bg-brand-950/5"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="border-y border-brand-200/80 bg-brand-50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start space-x-4">
+                    <i data-lucide="truck" class="w-5 h-5 text-brand-700 stroke-[1.5]"></i>
+                    <div>
+                        <h4 class="text-xs font-medium tracking-wider uppercase text-brand-900">Global Shipping</h4>
+                        <p class="text-xs text-brand-500 font-light mt-0.5">Free delivery on orders over $150</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center md:justify-start space-x-4">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-brand-700 stroke-[1.5]"></i>
+                    <div>
+                        <h4 class="text-xs font-medium tracking-wider uppercase text-brand-900">Sustainable Quality</h4>
+                        <p class="text-xs text-brand-500 font-light mt-0.5">Ethically sourced materials</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center md:justify-start space-x-4">
+                    <i data-lucide="rotate-ccw" class="w-5 h-5 text-brand-700 stroke-[1.5]"></i>
+                    <div>
+                        <h4 class="text-xs font-medium tracking-wider uppercase text-brand-900">Seamless Returns</h4>
+                        <p class="text-xs text-brand-500 font-light mt-0.5">30-day hassle-free policy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-brand-200 pb-6">
+            <div>
+                <span class="text-xs font-semibold tracking-widest uppercase text-brand-500">Curated Goods</span>
+                <h2 class="text-2xl sm:text-3xl font-light text-brand-950 mt-1">Catalog</h2>
+            </div>
+
+            <!-- Category Filters -->
+            <div id="category-filters" class="flex flex-wrap gap-2 sm:gap-6 mt-6 md:mt-0 text-xs font-medium tracking-wider uppercase">
+                <button data-category="all" class="filter-btn active text-brand-950 border-b border-brand-950 pb-1 transition-all">All</button>
+                <button data-category="ceramics" class="filter-btn text-brand-400 hover:text-brand-950 border-b border-transparent pb-1 transition-all">Ceramics</button>
+                <button data-category="lighting" class="filter-btn text-brand-400 hover:text-brand-950 border-b border-transparent pb-1 transition-all">Lighting</button>
+                <button data-category="apparel" class="filter-btn text-brand-400 hover:text-brand-950 border-b border-transparent pb-1 transition-all">Apparel</button>
+                <button data-category="accents" class="filter-btn text-brand-400 hover:text-brand-950 border-b border-transparent pb-1 transition-all">Accents</button>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+            <!-- Dynamic Injection via JavaScript -->
+        </div>
+    </section>
+
+    <section id="about" class="bg-brand-900 text-brand-100 py-24 my-10">
+        <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+            <span class="text-xs tracking-[0.3em] uppercase text-brand-400 font-light">Our Philosophy</span>
+            <h2 class="text-2xl sm:text-4xl font-light leading-relaxed tracking-tight text-brand-50">
+                "Simplicity is not about having less. It is about making room for what truly matters."
+            </h2>
+            <p class="text-xs sm:text-sm text-brand-400 font-light max-w-xl mx-auto leading-relaxed pt-2">
+                At AURA, we craft timeless objects for everyday ritual. We reject loud trends in favor of understated form, enduring utility, and subtle aesthetic texture.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-brand-50 border-t border-brand-200 text-xs text-brand-600 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="space-y-4">
+                    <span class="text-lg font-light tracking-[0.2em] text-brand-950 uppercase font-bold">A U R A</span>
+                    <p class="text-brand-500 font-light leading-relaxed max-w-xs">
+                        Essential minimalist objects designed for modern lifestyle and quiet spaces.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-medium tracking-widest uppercase text-brand-950 mb-4">Navigation</h5>
+                    <ul class="space-y-2.5 font-light">
+                        <li><a href="#hero" class="hover:text-brand-950 transition-colors">Home</a></li>
+                        <li><a href="#shop" class="hover:text-brand-950 transition-colors">Shop All</a></li>
+                        <li><a href="#about" class="hover:text-brand-950 transition-colors">Philosophy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-medium tracking-widest uppercase text-brand-950 mb-4">Support</h5>
+                    <ul class="space-y-2.5 font-light">
+                        <li><a href="#" class="hover:text-brand-950 transition-colors">Shipping & Returns</a></li>
+                        <li><a href="#" class="hover:text-brand-950 transition-colors">Care Guide</a></li>
+                        <li><a href="#" class="hover:text-brand-950 transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h5 class="font-medium tracking-widest uppercase text-brand-950">Newsletter</h5>
+                    <p class="text-brand-500 font-light">Subscribe for quiet updates and rare releases.</p>
+                    <form id="newsletter-form" class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email address" required class="bg-brand-100 border border-brand-200 px-3 py-2 text-xs focus:outline-none focus:border-brand-950 transition-colors text-brand-900">
+                        <button type="submit" class="bg-brand-950 text-brand-50 py-2 px-4 uppercase tracking-widest text-[10px] font-medium hover:bg-brand-800 transition-colors">Join</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-brand-200 pt-8 flex flex-col sm:flex-row justify-between items-center text-brand-400 font-light">
+                <p>&copy; 2026 AURA Inc. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-brand-900 transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-brand-900 transition-colors">Pinterest</a>
+                    <a href="#" class="hover:text-brand-900 transition-colors">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sliding Cart Drawer Container -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" class="absolute inset-0 bg-brand-950/40 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cart-panel" class="w-screen max-w-md bg-brand-50 shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out pointer-events-auto">
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-brand-200 flex items-center justify-between">
+                    <h3 class="text-xs font-semibold tracking-widest uppercase text-brand-950">Shopping Bag (<span id="cart-count">0</span>)</h3>
+                    <button id="close-cart-btn" class="text-brand-500 hover:text-brand-950 p-1" aria-label="Close cart">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 divide-y divide-brand-200/60 space-y-6">
+                    <!-- Dynamic rendering -->
+                </div>
+
+                <!-- Cart Footer / Total -->
+                <div class="p-6 border-t border-brand-200 bg-brand-100/50 space-y-4">
+                    <div class="flex justify-between text-xs tracking-wider uppercase font-medium">
+                        <span class="text-brand-600">Subtotal</span>
+                        <span id="cart-subtotal" class="text-brand-950 font-semibold">$0.00</span>
+                    </div>
+                    <p class="text-[11px] text-brand-400 font-light">Taxes and shipping calculated at checkout.</p>
+                    <button id="checkout-btn" class="w-full bg-brand-950 text-brand-50 py-4 text-xs tracking-widest uppercase font-medium hover:bg-brand-800 transition-colors flex items-center justify-center space-x-2">
+                        <span>Proceed to Checkout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="qv-backdrop" class="absolute inset-0 bg-brand-950/50 backdrop-blur-sm"></div>
+        <div class="relative bg-brand-50 max-w-3xl w-full rounded-none shadow-2xl overflow-hidden z-10 grid grid-cols-1 md:grid-cols-2 transform scale-95 transition-transform duration-300" id="qv-content">
+            <button id="close-qv-btn" class="absolute top-4 right-4 z-20 text-brand-600 hover:text-brand-950 p-1 bg-brand-50/80 rounded-full">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="aspect-square bg-brand-200 overflow-hidden relative">
+                <img id="qv-image" src="" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="p-8 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <span id="qv-category" class="text-[10px] tracking-widest uppercase text-brand-400 font-medium"></span>
+                    <h3 id="qv-title" class="text-xl font-light text-brand-950"></h3>
+                    <p id="qv-price" class="text-base font-normal text-brand-900"></p>
+                    <p id="qv-description" class="text-xs text-brand-500 font-light leading-relaxed pt-2 border-t border-brand-200"></p>
+                </div>
+                <div class="pt-6">
+                    <button id="qv-add-btn" class="w-full bg-brand-950 text-brand-50 py-3 text-xs tracking-widest uppercase font-medium hover:bg-brand-800 transition-colors">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Preview Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="checkout-backdrop" class="absolute inset-0 bg-brand-950/60 backdrop-blur-md"></div>
+        <div class="relative bg-brand-50 max-w-lg w-full p-8 shadow-2xl z-10 space-y-6 transform scale-95 transition-transform duration-300" id="checkout-content">
+            <div class="flex items-center justify-between border-b border-brand-200 pb-4">
+                <h3 class="text-xs font-semibold tracking-widest uppercase text-brand-950">Order Preview</h3>
+                <button id="close-checkout-btn" class="text-brand-500 hover:text-brand-950">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div id="checkout-summary" class="max-h-60 overflow-y-auto space-y-3 divide-y divide-brand-100 text-xs">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <div class="border-t border-brand-200 pt-4 space-y-2 text-xs">
+                <div class="flex justify-between text-brand-600">
+                    <span>Subtotal</span>
+                    <span id="co-subtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-brand-600">
+                    <span>Estimated Shipping</span>
+                    <span>Complimentary</span>
+                </div>
+                <div class="flex justify-between font-medium text-brand-950 text-sm pt-2 border-t border-brand-100">
+                    <span>Total</span>
+                    <span id="co-total">$0.00</span>
+                </div>
+            </div>
+
+            <button id="confirm-order-btn" class="w-full bg-brand-950 text-brand-50 py-4 text-xs tracking-widest uppercase font-medium hover:bg-brand-800 transition-colors">
+                Complete Order
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-brand-950 text-brand-50 px-5 py-3 text-xs tracking-wider uppercase flex items-center space-x-3 shadow-xl pointer-events-none opacity-0 translate-y-4 transition-all duration-300">
+        <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+        <span id="toast-message">Item added to cart</span>
+    </div>
+
+    <script>
+        // Sample Products Data
+        const products = [
+            {
+                id: 'p1',
+                name: 'Ceramic Stoneware Mug',
+                category: 'ceramics',
+                price: 38,
+                imagePrimary: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1577937927133-66ef06acdf18?q=80&w=800&auto=format&fit=crop',
+                description: 'Hand-thrown matte finish clay mug with ergonomic handle. Crafted in small batches.'
+            },
+            {
+                id: 'p2',
+                name: 'Sculptural Brass Desk Lamp',
+                category: 'lighting',
+                price: 215,
+                imagePrimary: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=800&auto=format&fit=crop',
+                description: 'Minimalist brushed brass lamp providing ambient, warm-toned luminescence.'
+            },
+            {
+                id: 'p3',
+                name: 'Organic Linen Oversized Shirt',
+                category: 'apparel',
+                price: 120,
+                imagePrimary: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop',
+                description: 'Breathable 100% French linen garment tailored for relaxed elegance.'
+            },
+            {
+                id: 'p4',
+                name: 'Monolithic Marble Tray',
+                category: 'accents',
+                price: 85,
+                imagePrimary: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1584589167171-541ce45f1eea?q=80&w=800&auto=format&fit=crop',
+                description: 'Solid Carrara marble vessel with polished surface and rounded subtle bevels.'
+            },
+            {
+                id: 'p5',
+                name: 'Minimalist Wall Clock',
+                category: 'accents',
+                price: 95,
+                imagePrimary: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop',
+                description: 'Silent sweep mechanism housed in powder-coated steel frame.'
+            },
+            {
+                id: 'p6',
+                name: 'Textured Earthenware Pitcher',
+                category: 'ceramics',
+                price: 64,
+                imagePrimary: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800&auto=format&fit=crop',
+                description: 'Raw tactile exterior contrasting with smooth food-safe interior glaze.'
+            },
+            {
+                id: 'p7',
+                name: 'Smoked Glass Pendant Light',
+                category: 'lighting',
+                price: 180,
+                imagePrimary: 'https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?q=80&w=800&auto=format&fit=crop',
+                description: 'Hand-blown translucent glass shade casting muted, atmospheric glow.'
+            },
+            {
+                id: 'p8',
+                name: 'Heavyweight Cotton Crew-Neck',
+                category: 'apparel',
+                price: 75,
+                imagePrimary: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop',
+                imageSecondary: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800&auto=format&fit=crop',
+                description: 'Durable 400gsm combed cotton jersey in a relaxed boxy cut.'
+            }
+        ];
+
+        // State Management
+        let cart = [];
+        let currentCategory = 'all';
+        let currentQvProduct = null;
+
+        // Elements
+        const productGrid = document.getElementById('product-grid');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartSubtotalEl = document.getElementById('cart-subtotal');
+        const cartCountEl = document.getElementById('cart-count');
+        const cartBadgeEl = document.getElementById('cart-badge');
+
+        const quickviewModal = document.getElementById('quickview-modal');
+        const qvContent = document.getElementById('qv-content');
+
+        const checkoutModal = document.getElementById('checkout-modal');
+        const checkoutContent = document.getElementById('checkout-content');
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderProducts();
+            setupEventListeners();
+        });
+
+        // Render Product Cards
+        function renderProducts() {
+            const filtered = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentCategory);
+
+            productGrid.innerHTML = filtered.map(product => `
+                <div class="product-card group flex flex-col justify-between cursor-pointer" data-id="${product.id}">
+                    <div class="relative aspect-[3/4] bg-brand-100 overflow-hidden mb-4">
+                        <img src="${product.imagePrimary}" 
+                             alt="${product.name}" 
+                             class="img-hover-zoom w-full h-full object-cover object-center absolute inset-0"
+                             onerror="this.src='https://placehold.co/600x800/e5e5e5/171717?text=Product'">
+                        <img src="${product.imageSecondary}" 
+                             alt="${product.name} Alternate" 
+                             class="w-full h-full object-cover object-center absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                             onerror="this.src='https://placehold.co/600x800/e5e5e5/171717?text=Alternate'">
+                        
+                        <!-- Quick View Button Overlay -->
+                        <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center bg-gradient-to-t from-brand-950/20 to-transparent">
+                            <button class="qv-trigger w-full bg-brand-50/90 backdrop-blur-sm text-brand-950 py-2.5 text-[10px] tracking-widest uppercase font-medium hover:bg-brand-950 hover:text-brand-50 transition-colors shadow-sm" data-id="${product.id}">
+                                Quick View
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="text-[10px] tracking-widest uppercase text-brand-400 font-medium">${product.category}</span>
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-xs font-normal text-brand-900 group-hover:text-brand-500 transition-colors">${product.name}</h3>
+                            <span class="text-xs font-medium text-brand-950">$${product.price}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-bind Quick View Buttons
+            document.querySelectorAll('.qv-trigger').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const pid = btn.getAttribute('data-id');
+                    openQuickView(pid);
+                });
+            });
+
+            // Card click triggers quickview as well
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const pid = card.getAttribute('data-id');
+                    openQuickView(pid);
+                });
+            });
+        }
+
+        // Category Filter Handling
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active', 'text-brand-950', 'border-brand-950');
+                    b.classList.add('text-brand-400', 'border-transparent');
+                });
+                btn.classList.add('active', 'text-brand-950', 'border-brand-950');
+                btn.classList.remove('text-brand-400', 'border-transparent');
+                
+                currentCategory = btn.getAttribute('data-category');
+                renderProducts();
+            });
+        });
+
+        // Quick View Logic
+        function openQuickView(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            currentQvProduct = product;
+            document.getElementById('qv-image').src = product.imagePrimary;
+            document.getElementById('qv-category').textContent = product.category;
+            document.getElementById('qv-title').textContent = product.name;
+            document.getElementById('qv-price').textContent = `$${product.price}`;
+            document.getElementById('qv-description').textContent = product.description;
+
+            quickviewModal.classList.remove('opacity-0', 'pointer-events-none');
+            qvContent.classList.remove('scale-95');
+            qvContent.classList.add('scale-100');
+        }
+
+        function closeQuickView() {
+            quickviewModal.classList.add('opacity-0', 'pointer-events-none');
+            qvContent.classList.remove('scale-100');
+            qvContent.classList.add('scale-95');
+        }
+
+        // Cart Logic
+        function addToCart(product) {
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCart();
+            showToast(`Added ${product.name} to bag`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            // Count total items
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountEl.textContent = totalCount;
+            
+            if (totalCount > 0) {
+                cartBadgeEl.textContent = totalCount;
+                cartBadgeEl.classList.remove('opacity-0');
+            } else {
+                cartBadgeEl.classList.add('opacity-0');
+            }
+
+            // Calculate Subtotal
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+
+            // Render Cart Items
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center py-16 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-10 h-10 text-brand-300 stroke-[1]"></i>
+                        <p class="text-xs text-brand-500 uppercase tracking-widest">Your shopping bag is empty</p>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center space-x-4 pt-4 first:pt-0">
+                        <img src="${item.imagePrimary}" alt="${item.name}" class="w-16 h-20 object-cover bg-brand-100 flex-shrink-0">
+                        <div class="flex-1 space-y-1">
+                            <h4 class="text-xs font-medium text-brand-950">${item.name}</h4>
+                            <p class="text-xs text-brand-500">$${item.price}</p>
+                            <div class="flex items-center space-x-3 pt-1">
+                                <button onclick="updateQuantity('${item.id}', -1)" class="text-brand-400 hover:text-brand-950 px-1 text-xs">-</button>
+                                <span class="text-xs font-medium text-brand-900">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)" class="text-brand-400 hover:text-brand-950 px-1 text-xs">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="text-brand-400 hover:text-brand-950 p-1">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+            lucide.createIcons();
+        }
+
+        // Cart Drawer Toggles
+        function openCart() {
+            cartDrawer.classList.remove('pointer-events-none');
+            cartBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+            cartPanel.classList.remove('translate-x-full');
+        }
+
+        function closeCart() {
+            cartPanel.classList.add('translate-x-full');
+            cartBackdrop.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                cartDrawer.classList.add('pointer-events-none');
+            }, 300);
+        }
+
+        // Checkout Preview Logic
+        function openCheckout() {
+            if (cart.length === 0) {
+                showToast("Your cart is empty");
+                return;
+            }
+            closeCart();
+
+            const summaryEl = document.getElementById('checkout-summary');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            summaryEl.innerHTML = cart.map(item => `
+                <div class="flex justify-between items-center py-2">
+                    <div>
+                        <p class="font-medium text-brand-950">${item.name}</p>
+                        <p class="text-brand-400">Qty: ${item.quantity} × $${item.price}</p>
+                    </div>
+                    <span class="font-medium">$${(item.quantity * item.price).toFixed(2)}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('co-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('co-total').textContent = `$${subtotal.toFixed(2)}`;
+
+            checkoutModal.classList.remove('opacity-0', 'pointer-events-none');
+            checkoutContent.classList.remove('scale-95');
+            checkoutContent.classList.add('scale-100');
+        }
+
+        function closeCheckout() {
+            checkoutModal.classList.add('opacity-0', 'pointer-events-none');
+            checkoutContent.classList.remove('scale-100');
+            checkoutContent.classList.add('scale-95');
+        }
+
+        // Toast Handler
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Cart drawer buttons
+            document.getElementById('open-cart-btn').addEventListener('click', openCart);
+            document.getElementById('close-cart-btn').addEventListener('click', closeCart);
+            document.getElementById('cart-backdrop').addEventListener('click', closeCart);
+
+            // Quick view events
+            document.getElementById('close-qv-btn').addEventListener('click', closeQuickView);
+            document.getElementById('qv-backdrop').addEventListener('click', closeQuickView);
+            document.getElementById('qv-add-btn').addEventListener('click', () => {
+                if (currentQvProduct) {
+                    addToCart(currentQvProduct);
+                    closeQuickView();
+                    openCart();
+                }
+            });
+
+            // Checkout Events
+            document.getElementById('checkout-btn').addEventListener('click', openCheckout);
+            document.getElementById('close-checkout-btn').addEventListener('click', closeCheckout);
+            document.getElementById('checkout-backdrop').addEventListener('click', closeCheckout);
+            document.getElementById('confirm-order-btn').addEventListener('click', () => {
+                closeCheckout();
+                cart = [];
+                updateCart();
+                showToast("Order placed successfully!");
+            });
+
+            // Mobile Navigation Toggle
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Newsletter Form
+            document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                showToast("Thank you for subscribing.");
+                e.target.reset();
+            });
+
+            // Search placeholder notification
+            document.getElementById('search-btn').addEventListener('click', () => {
+                showToast("Search is currently available via filters.");
+            });
+        }
+    </script>
+</body>
+</html>
